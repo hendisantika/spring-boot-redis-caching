@@ -1,5 +1,6 @@
 package com.hendisantika.exception;
 
+import com.hendisantika.response.GenericResponse;
 import com.hendisantika.response.InvalidDataResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -94,6 +95,15 @@ public class GlobalExceptionHandler {
         errors.put(ex.getParameterName(), Collections.singletonList(ex.getMessage()));
 
         return new ResponseEntity<>(createInvalidDataResponse(errors), HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<GenericResponse> globalExceptionHandler(Exception ex, WebRequest request) {
+        GenericResponse response = new GenericResponse(formatMessage(ex.getMessage()));
+
+        log.error("Internal Server Error", ex);
+
+        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }
