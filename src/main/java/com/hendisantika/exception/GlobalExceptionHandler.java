@@ -1,5 +1,6 @@
 package com.hendisantika.exception;
 
+import com.hendisantika.response.InvalidDataResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 
@@ -41,5 +42,12 @@ public class GlobalExceptionHandler {
             errors.put(field, strings);
         }
 
+    }
+
+    private InvalidDataResponse createInvalidDataResponse(HashMap<String, List<String>> errors) {
+        HashMap<String, Map<String, List<String>>> result = new HashMap<>();
+        result.put("errors", errors);
+
+        return new InvalidDataResponse(result);
     }
 }
