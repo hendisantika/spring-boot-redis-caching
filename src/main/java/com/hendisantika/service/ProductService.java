@@ -136,4 +136,8 @@ public class ProductService {
     public Optional<Product> findById(long id) {
         return productRepository.findById(id);
     }
+
+    public Product update(Product product) {
+        return productRepository.save(product);
+    }
 }
