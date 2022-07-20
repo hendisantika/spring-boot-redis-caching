@@ -6,6 +6,8 @@ import com.hendisantika.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by IntelliJ IDEA.
  * Project : spring-boot-redis-caching
@@ -23,5 +25,9 @@ public class CategoryService {
 
     public Category create(CreateCategoryDto createCategoryDto) {
         return categoryRepository.save(createCategoryDto.toCategory());
+    }
+
+    public List<Category> findAll() {
+        return categoryRepository.findAllByIdGreaterThanOrderByIdDesc(0);
     }
 }
