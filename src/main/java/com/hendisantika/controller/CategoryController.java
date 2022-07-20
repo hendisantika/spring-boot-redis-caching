@@ -1,9 +1,17 @@
 package com.hendisantika.controller;
 
+import com.hendisantika.dto.CreateCategoryDto;
+import com.hendisantika.model.Category;
+import com.hendisantika.response.CategoryResponse;
 import com.hendisantika.service.CategoryService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
 
 /**
  * Created by IntelliJ IDEA.
@@ -20,4 +28,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class CategoryController {
     private final CategoryService categoryService;
+
+    @PostMapping
+    public ResponseEntity<CategoryResponse> create(@Valid @RequestBody CreateCategoryDto createCategoryDto) {
+        Category category = categoryService.create(createCategoryDto);
+
+        return ResponseEntity.ok(new CategoryResponse(category));
+    }
+
 }
