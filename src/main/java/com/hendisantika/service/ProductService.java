@@ -50,4 +50,9 @@ public class ProductService {
 
         return productRepository.findAllByIdGreaterThanOrderByIdDesc(0);
     }
+
+    public Optional<Product> findByName(String name) {
+        return productRepository.findByName(name);
+    }
+
 }
