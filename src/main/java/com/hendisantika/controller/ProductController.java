@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hendisantika.dto.CreateProductDto;
+import com.hendisantika.dto.SearchProductDto;
 import com.hendisantika.model.CacheData;
 import com.hendisantika.model.Product;
 import com.hendisantika.repository.CacheDataRepository;
@@ -70,6 +71,35 @@ public class ProductController {
         CacheData cacheData = new CacheData("allProducts", productsAsJsonString);
 
         cacheDataRepository.save(cacheData);
+
+        return ResponseEntity.ok(new ProductListResponse(productList));
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<ProductListResponse> search(@Valid SearchProductDto searchProductDto) throws InterruptedException, JsonProcessingException {
+        String cacheKey = searchProductDto.buildCacheKey("searchProducts");
+
+        Optional<CacheData> optionalCacheData = cacheDataRepository.findById(cacheKey);
+
+        // Cache hit
+        if (optionalCacheData.isPresent()) {
+            String productAsString = optionalCacheData.get().getValue();
+
+            TypeReference<List<Product>> mapType = new TypeReference<List<Product>>() {
+            };
+            List<Product> productList = objectMapper.readValue(productAsString, mapType);
+
+            return ResponseEntity.ok(new ProductListResponse(productList));
+        }
+
+        List<Product> productList = productService.search(searchProductDto);
+
+        String productsAsJsonString = objectMapper.writeValueAsString(productList);
+        CacheData cacheData = new CacheData(cacheKey, productsAsJsonString);
+
+        cacheDataRepository.save(cacheData);
+
+        cacheDataRepository.deleteById("allProducts");
 
         return ResponseEntity.ok(new ProductListResponse(productList));
     }
