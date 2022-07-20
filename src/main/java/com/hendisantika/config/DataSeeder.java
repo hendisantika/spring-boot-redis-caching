@@ -29,4 +29,11 @@ public class DataSeeder implements ApplicationListener<ContextRefreshedEvent> {
     private final CategoryService categoryService;
 
     private final ProductService productService;
+
+    @Override
+    public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
+        this.loadCategories();
+
+        this.loadProducts();
+    }
 }
