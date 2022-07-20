@@ -132,4 +132,8 @@ public class ProductService {
 
         return query.getResultList();
     }
+
+    public Optional<Product> findById(long id) {
+        return productRepository.findById(id);
+    }
 }
