@@ -3,7 +3,10 @@ package com.hendisantika.exception;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by IntelliJ IDEA.
@@ -23,5 +26,20 @@ public class GlobalExceptionHandler {
         result.put("message", message);
 
         return result;
+    }
+
+    public void updateErrorHashMap(Map<String, List<String>> errors, String field, String message) {
+        if (errors.containsKey(field)) {
+            List<String> strings = errors.get(field);
+            strings.add(message);
+
+            errors.put(field, strings);
+        } else {
+            List<String> strings = new ArrayList<>();
+            strings.add(message);
+
+            errors.put(field, strings);
+        }
+
     }
 }
