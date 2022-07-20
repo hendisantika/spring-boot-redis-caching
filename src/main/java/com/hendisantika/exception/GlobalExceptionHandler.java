@@ -3,6 +3,8 @@ package com.hendisantika.exception;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 
+import java.util.HashMap;
+
 /**
  * Created by IntelliJ IDEA.
  * Project : spring-boot-redis-caching
@@ -16,4 +18,10 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 @Slf4j
 @ControllerAdvice
 public class GlobalExceptionHandler {
+    private HashMap<String, Object> formatMessage(String message) {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("message", message);
+
+        return result;
+    }
 }
