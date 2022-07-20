@@ -14,7 +14,9 @@ import com.hendisantika.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -102,5 +104,31 @@ public class ProductController {
         cacheDataRepository.deleteById("allProducts");
 
         return ResponseEntity.ok(new ProductListResponse(productList));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ProductResponse> update(@PathVariable long id, @Valid @RequestBody float price) {
+        Optional<Product> optionalProduct = productService.findById(id);
+
+        if (optionalProduct.isEmpty()) {
+            throw new RuntimeException("Product not found");
+        }
+
+        Product productToUpdate = optionalProduct.get();
+        productToUpdate.setPrice(price);
+
+        Product productUpdated = productService.update(productToUpdate);
+
+        // Invalidate the cache
+        String productCategory = productUpdated.getCategory().getName();
+
+        List<String> cacheKeys = cacheDataRepository.findByIdContainingIgnoreCase(productCategory)
+                .stream()
+                .map((CacheData::getKey))
+                .toList();
+
+        cacheDataRepository.deleteAllById(cacheKeys);
+
+        return ResponseEntity.ok(new ProductResponse(productUpdated));
     }
 }
