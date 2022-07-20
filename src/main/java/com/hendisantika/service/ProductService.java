@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -41,5 +42,12 @@ public class ProductService {
         product.setCategory(optionalCategory.get());
 
         return productRepository.save(product);
+    }
+
+    public List<Product> findAll() throws InterruptedException {
+        // Simulate server pressure and high computation
+        Thread.sleep(3000);
+
+        return productRepository.findAllByIdGreaterThanOrderByIdDesc(0);
     }
 }
