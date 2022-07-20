@@ -1,5 +1,8 @@
 package com.hendisantika.service;
 
+import com.hendisantika.dto.CreateProductDto;
+import com.hendisantika.model.Category;
+import com.hendisantika.model.Product;
 import com.hendisantika.repository.CategoryRepository;
 import com.hendisantika.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -7,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.Optional;
 
 /**
  * Created by IntelliJ IDEA.
@@ -25,4 +29,17 @@ public class ProductService {
     private final CategoryRepository categoryRepository;
     @PersistenceContext
     private EntityManager entityManager;
+
+    public Product create(CreateProductDto createProductDto) {
+        Optional<Category> optionalCategory = categoryRepository.findById(createProductDto.getCategoryId());
+
+        if (optionalCategory.isEmpty()) {
+            throw new RuntimeException("The category not found");
+        }
+
+        Product product = createProductDto.toProduct();
+        product.setCategory(optionalCategory.get());
+
+        return productRepository.save(product);
+    }
 }
