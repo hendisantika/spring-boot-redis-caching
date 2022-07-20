@@ -1,0 +1,91 @@
+{
+  "info": {
+    "_postman_id": "a91c22ff-6493-425e-ace7-b0fd5afa6f5b",
+    "name": "Product Inventory",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Get all categories",
+      "id": "4fd12e35-9110-461f-b05b-efbd22dd0cb2",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "http://localhost:8030/categories"
+      },
+      "response": []
+    },
+    {
+      "name": "Get all products",
+      "id": "56f316aa-0dc9-4c6f-812c-3b62dc648db4",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "http://localhost:8030/products"
+      },
+      "response": []
+    },
+    {
+      "name": "Get search products",
+      "id": "be89da23-f4f9-4ac1-89a2-5f466d88937d",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8030/products/search?name=iphone se&category=Phone&minPrice=150&maxPrice=550&available=yes",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8030",
+          "path": [
+            "products",
+            "search"
+          ],
+          "query": [
+            {
+              "key": "name",
+              "value": "iphone se"
+            },
+            {
+              "key": "category",
+              "value": "Phone"
+            },
+            {
+              "key": "minPrice",
+              "value": "150"
+            },
+            {
+              "key": "maxPrice",
+              "value": "550"
+            },
+            {
+              "key": "available",
+              "value": "yes"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Add a product",
+      "id": "9438793f-29f0-4636-977a-b27fb32f74e1",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"categoryId\": 1,\n    \"name\": \"Product XXX\",\n    \"description\": \"Description of product XXX\",\n    \"price\": 347,\n    \"isAvailable\": 1\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "http://localhost:8030/products"
+      },
+      "response": []
+    }
+  ]
+}
