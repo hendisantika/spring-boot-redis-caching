@@ -1,11 +1,19 @@
 package com.hendisantika.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hendisantika.dto.CreateProductDto;
+import com.hendisantika.model.Product;
 import com.hendisantika.repository.CacheDataRepository;
+import com.hendisantika.response.ProductResponse;
 import com.hendisantika.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
 
 /**
  * Created by IntelliJ IDEA.
@@ -27,4 +35,10 @@ public class ProductController {
 
     private final ObjectMapper objectMapper;
 
+    @PostMapping
+    public ResponseEntity<ProductResponse> create(@Valid @RequestBody CreateProductDto createProductDto) {
+        Product product = productService.create(createProductDto);
+
+        return ResponseEntity.ok(new ProductResponse(product));
+    }
 }
