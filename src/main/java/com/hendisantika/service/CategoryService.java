@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by IntelliJ IDEA.
@@ -30,4 +31,9 @@ public class CategoryService {
     public List<Category> findAll() {
         return categoryRepository.findAllByIdGreaterThanOrderByIdDesc(0);
     }
+
+    public Optional<Category> findByName(String name) {
+        return categoryRepository.findByName(name);
+    }
+}
 }
