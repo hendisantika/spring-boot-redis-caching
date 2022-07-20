@@ -1,5 +1,7 @@
 package com.hendisantika.service;
 
+import com.hendisantika.dto.CreateCategoryDto;
+import com.hendisantika.model.Category;
 import com.hendisantika.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,4 +20,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CategoryService {
     private final CategoryRepository categoryRepository;
+
+    public Category create(CreateCategoryDto createCategoryDto) {
+        return categoryRepository.save(createCategoryDto.toCategory());
+    }
 }
