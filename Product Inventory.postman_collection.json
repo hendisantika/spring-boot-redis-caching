@@ -1,0 +1,118 @@
+{
+  "info": {
+    "_postman_id": "5c0d6f0a-7745-453e-9b6c-c30e90ddcc32",
+    "name": "Product Inventory",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "276892"
+  },
+  "item": [
+    {
+      "name": "Get all categories",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/categories",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "categories"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get all products",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/products",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "products"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get search products",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/products/search?name=iphone se&category=Phone&minPrice=150&maxPrice=550&available=yes",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "products",
+            "search"
+          ],
+          "query": [
+            {
+              "key": "name",
+              "value": "iphone se"
+            },
+            {
+              "key": "category",
+              "value": "Phone"
+            },
+            {
+              "key": "minPrice",
+              "value": "150"
+            },
+            {
+              "key": "maxPrice",
+              "value": "550"
+            },
+            {
+              "key": "available",
+              "value": "yes"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Add a product",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"categoryId\": 1,\n    \"name\": \"Product XXX\",\n    \"description\": \"Description of product XXX\",\n    \"price\": 347,\n    \"isAvailable\": 1\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/products",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "products"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
